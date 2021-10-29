@@ -7,12 +7,12 @@ pool:
 steps:
   - task: UseDotNet@2
     displayName: Use .NET SDK 5.x
-    inputs: null
-    version: 5.x
+    inputs: 
+     version: 5.x
   - task: Npm@1
     displayName: Run npm install
-    inputs: null
-    verbose: false
+    inputs: 
+     verbose: false
   - script: './node_modules/.bin/node-sass Tailspin.SpaceGame.Web/wwwroot --output Tailspin.SpaceGame.Web/wwwroot'
     displayName: Compile Sass assets
   - task: gulp@1
@@ -22,23 +22,23 @@ steps:
     workingDirectory: Tailspin.SpaceGame.Web/wwwroot
   - task: DotNetCoreCLI@2
     displayName: Restore project dependencies
-    inputs: null
-    command: restore
+    inputs: 
+     command: restore
     projects: '**/*.csproj'
   - task: DotNetCoreCLI@2
     displayName: Build the project - Release
-    inputs: null
-    command: build
-    arguments: '--no-restore --configuration Release'
-    projects: '**/*.csproj'
+    inputs: 
+     command: build
+     arguments: '--no-restore --configuration Release'
+     projects: '**/*.csproj'
   - task: DotNetCoreCLI@2
     displayName: Publish the project - Release
-    inputs: null
-    command: publish
-    projects: '**/*.csproj'
-    publishWebProjects: false
-    arguments: '--no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/Release'
-    zipAfterPublish: true
+    inputs: 
+     command: publish
+     projects: '**/*.csproj'
+     publishWebProjects: false
+     arguments: '--no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/Release'
+     zipAfterPublish: true
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: drop'
     condition: succeeded()
